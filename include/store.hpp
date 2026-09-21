@@ -7,10 +7,10 @@ class Store{
     private:
         std::unordered_map<std::string,std::string> m_data;
     public:
-        bool del(std::string& key); 
+        bool del(const std::string& key); 
         
-        std::optional<std::string> get(std::string& key);
+        std::optional<std::string> get(const std::string& key);
 
-        void set(std::string& key, std::string& value);
+        void set(const std::string& key, const std::string& value);
         // at this stage adding or updating in the hashmap never fails so no need to return a success/fail bool
 };
