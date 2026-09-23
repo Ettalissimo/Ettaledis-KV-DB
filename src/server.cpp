@@ -3,6 +3,10 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include "../include/request_processor.hpp"
+#include "../include/request_validator.hpp"
+#include "../include/store.hpp"
+
 int main(){
     const int PORT = 8080;
 
@@ -67,7 +71,11 @@ int main(){
         std::cout << "Request from client: " << buffer << std::endl;
 
         //call request_validator
+        std::vector<Command> commands = request_validator(buffer);
+
         //call request_processor on vector of commands
+        Store store = Store();
+        std::vector<std::string> responses =  request_processor(commands,store);
 
         //6- send data back to client
         std::string response = " "; // to fill later

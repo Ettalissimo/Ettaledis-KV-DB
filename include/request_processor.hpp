@@ -4,4 +4,4 @@
 #include <string>
 
 
-td::vector<std::string> request_processor(std::vector<Command> commands);
+std::vector<std::string> request_processor(const std::vector<Command>& commands,Store& store);

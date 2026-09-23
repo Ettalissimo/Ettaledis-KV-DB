@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-std::vector<Command> input_validator(const std::string &request){
+std::vector<Command> request_validator(const std::string &request){
     // tokenize → check keyword → check arity → dispatch
 
     std::vector<std::string> request_vector;
