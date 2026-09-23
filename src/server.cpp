@@ -66,6 +66,9 @@ int main(){
         recv(client_fd, buffer, sizeof(buffer), 0);
         std::cout << "Request from client: " << buffer << std::endl;
 
+        //call request_validator
+        //call request_processor on vector of commands
+
         //6- send data back to client
         std::string response = " "; // to fill later
         send(client_fd, response.c_str(), response.size(), 0);
