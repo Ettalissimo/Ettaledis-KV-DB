@@ -37,3 +37,24 @@ On day 1: create the store class which wraps up a hash map we have methods (set,
 Documentation for c++ networking :
 
 https://beej.us/guide/bgnet/html/#system-calls-or-bust
+
+
+https://www.geeksforgeeks.org/cpp/socket-programming-in-cpp/
+
+client sends request to server via sockets 
+this request is then passed to a mini compiler
+
+every string is tokenized 
+we dispatch each line at a key word like set get del
+we consider that a full command 
+then check every command if it matches the number of argument needed
+if all good call the store methods
+
+
+tokenize → check keyword → check arity → dispatch
+
+The language Rules :
+
+SET key value → keyword + 2 more tokens (key, value) → arity 2
+GET key       → keyword + 1 more token (key) → arity 1
+DEL key       → keyword + 1 more token (key) → arity 1
