@@ -3,10 +3,12 @@
 #include <string>
 #include <optional>
 #include "../include/store.hpp"
+#include <iostream>
 
 
 std::vector<std::string> request_processor(const std::vector<Command>& commands,Store& store){
 //Store& (non-const, since set/del mutate it) and const std::vector<Command>& for read-only access without copying.
+    std::cout << "prob processrpr "<< std::endl;
     std::vector<std::string> response;
     std::string res;
 
@@ -31,6 +33,7 @@ std::vector<std::string> request_processor(const std::vector<Command>& commands,
         }
         response.push_back(res);
     }
+    std::cout << "prob processr 2 "<< std::endl;
 
     return response;
 }

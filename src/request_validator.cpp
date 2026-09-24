@@ -5,6 +5,7 @@
 
 std::vector<Command> request_validator(const std::string &request){
     // tokenize → check keyword → check arity → dispatch
+    std::cout << "prob validator "<< std::endl;
 
     std::vector<std::string> request_vector;
     std::vector<std::vector<std::string>> command_vector;
@@ -39,7 +40,7 @@ std::vector<Command> request_validator(const std::string &request){
         }
         commands.push_back(com);
     }
-
+    std::cout << "prob validator 2 "<< std::endl;
     return commands;
 
 };

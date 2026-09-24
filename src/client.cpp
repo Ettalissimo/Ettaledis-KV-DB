@@ -5,16 +5,18 @@
 #include <unistd.h>
 
 int main(){
+
     const char* SERVER_IP = "127.0.0.1";
     const int PORT = 8080;
 
     // 1. Create a TCP socket
     // AF_INET → IPv4 addresses (e.g. 192.168.1.1)
-		// AF_INET6 → IPv6 addresses (e.g. 2001:db8::1)
+	// AF_INET6 → IPv6 addresses (e.g. 2001:db8::1)
 		
-		// SOCK_STREAM (tcp) : Socket Type
-		// SOCK_DGRAM → UDP
-		// SOCK_RAW → raw sockets — direct access to lower-level protocols (e.g. crafting your own IP/ICMP packets), typically requires elevated privileges.
+	// SOCK_STREAM (tcp) : Socket Type
+	// SOCK_DGRAM → UDP
+	// SOCK_RAW → raw sockets — direct access to lower-level protocols (e.g. crafting your own IP/ICMP packets), typically requires elevated privileges.
+    
     int sock = socket(AF_INET, SOCK_STREAM, 0); 
     if (sock < 0) {
         std::cerr << "Failed to create socket\n";
@@ -35,20 +37,20 @@ int main(){
     }
 
     //3- connect to the server
-    if (connect(sock, (sockaddr*)&server_addr, sizeof(server_addr)),0){
+    if (connect(sock, (sockaddr*)&server_addr, sizeof(server_addr)) < 0){
         std::cerr <<"Connection failed \n";
         close(sock);
         return 1;
     }
 
     //4- send a request to the server
-    std::string request = "get data"; //fill later
+    std::string request = "get sam\n"; //fill later
     send(sock,request.c_str(), request.size(),0);
 
     //5- Receive the server s response
     char buffer[1024] = {0};
-    recv(sock, buffer,sizeof(buffer), 0);
-    std::cout << "Server response: "<< buffer<< std::endl;
+    ssize_t bytes_received = recv(sock, buffer,sizeof(buffer)-1, 0);
+    std::cout << "Server response: "<< buffer << std::endl;
 
     //6-close the connection
     close(sock);

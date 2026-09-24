@@ -2,6 +2,8 @@
 #include "../include/request_validator.hpp"
 #include <vector>
 #include <string>
+#include "../include/store.hpp"
+
 
 
 std::vector<std::string> request_processor(const std::vector<Command>& commands,Store& store);

@@ -58,3 +58,22 @@ The language Rules :
 SET key value → keyword + 2 more tokens (key, value) → arity 2
 GET key       → keyword + 1 more token (key) → arity 1
 DEL key       → keyword + 1 more token (key) → arity 1
+
+
+To run code using CMake:
+`mkdir build && cd build
+cmake ..
+make`
+
+
+in build/
+
+`./server
+./client`
+
+After adding new files later
+
+Just add the new .cpp to the relevant list in CMakeLists.txt (e.g. a new src/expiry.cpp goes into COMMON_SOURCES if both need it, or directly into add_executable(server ...) if it's server-only), then re-run:
+
+`cmake ..
+make`

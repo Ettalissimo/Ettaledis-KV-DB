@@ -50,6 +50,8 @@ int main(){
 
     std::cout << "Server listening on port " << PORT << "...\n";
 
+    Store store;   // one shared instance for the whole server's lifetime
+
     while (true){
         // 4- accept a cliemt connection (blocks untill one arrives)
         sockaddr_in client_addr {};
@@ -67,19 +69,33 @@ int main(){
         
         // 5- read a request from client
         char buffer[1024] = {0};
-        recv(client_fd, buffer, sizeof(buffer), 0);
-        std::cout << "Request from client: " << buffer << std::endl;
+        ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer)-1, 0);
+
+
+        if (bytes_received == 0) {
+            std::cout << "Client disconnected\n";
+            continue;
+        } else if (bytes_received < 0) {
+            std::cerr << "recv() failed\n";
+            continue;
+        }
+
+        std::string request(buffer, bytes_received);
+        std::cout << "Request from client: " << request << std::endl;
 
         //call request_validator
-        std::vector<Command> commands = request_validator(buffer);
+        std::vector<Command> commands = request_validator(request);
 
         //call request_processor on vector of commands
-        Store store = Store();
         std::vector<std::string> responses =  request_processor(commands,store);
 
         //6- send data back to client
-        std::string response = " "; // to fill later
-        send(client_fd, response.c_str(), response.size(), 0);
+        for (const std::string& response : responses){
+            send(client_fd, response.c_str(), response.size(), 0);
+        }
+        
+        //std::string response = " "; // to fill later
+        //send(client_fd, response.c_str(), response.size(), 0);
 
         //7- close this client s connection
         close(client_fd);

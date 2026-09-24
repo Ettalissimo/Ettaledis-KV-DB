@@ -1,0 +1,4 @@
+/home/oussamaetta/Desktop/Projects-Perso-Oussama/Ettaledis/Ettaledis-KV-DB/build/CMakeFiles/server.dir
+/home/oussamaetta/Desktop/Projects-Perso-Oussama/Ettaledis/Ettaledis-KV-DB/build/CMakeFiles/client.dir
+/home/oussamaetta/Desktop/Projects-Perso-Oussama/Ettaledis/Ettaledis-KV-DB/build/CMakeFiles/edit_cache.dir
+/home/oussamaetta/Desktop/Projects-Perso-Oussama/Ettaledis/Ettaledis-KV-DB/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra CMakeFiles/server.dir/src/server.cpp.o CMakeFiles/server.dir/src/store.cpp.o CMakeFiles/server.dir/src/request_validator.cpp.o CMakeFiles/server.dir/src/request_processor.cpp.o -o server 
