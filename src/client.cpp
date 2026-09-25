@@ -44,13 +44,24 @@ int main(){
     }
 
     //4- send a request to the server
-    std::string request = "get sam\n"; //fill later
-    send(sock,request.c_str(), request.size(),0);
 
-    //5- Receive the server s response
-    char buffer[1024] = {0};
-    ssize_t bytes_received = recv(sock, buffer,sizeof(buffer)-1, 0);
-    std::cout << "Server response: "<< buffer << std::endl;
+    std::cout << "Ettaledis KV DB "<< std::endl;
+
+    std::string request = ""; //fill later
+    while(1){
+
+        std::getline(std::cin,request);
+        if (request == "exit"){
+            break;
+        };
+        request= request + "\n";
+        send(sock,request.c_str(), request.size(),0);
+
+        //5- Receive the server s response
+        char buffer[1024] = {0};
+        ssize_t bytes_received = recv(sock, buffer,sizeof(buffer)-1, 0);
+        std::cout << "Server response: "<< buffer << std::endl;
+    }
 
     //6-close the connection
     close(sock);
