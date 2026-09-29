@@ -67,36 +67,38 @@ int main(){
                   <<  inet_ntoa(client_addr.sin_addr) << ":"
                   <<  ntohs(client_addr.sin_port) << "\n";
         
-        // 5- read a request from client
-        char buffer[1024] = {0};
-        ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer)-1, 0);
+        while(true){
+            
+            // 5- read a request from client
+            char buffer[1024] = {0};
+            ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer)-1, 0);
 
 
-        if (bytes_received == 0) {
-            std::cout << "Client disconnected\n";
-            continue;
-        } else if (bytes_received < 0) {
-            std::cerr << "recv() failed\n";
-            continue;
+            if (bytes_received == 0) {
+                std::cout << "Client disconnected\n";
+                continue;
+            } else if (bytes_received < 0) {
+                std::cerr << "recv() failed\n";
+                continue;
+            }
+
+            std::string request(buffer, bytes_received);
+            std::cout << "Request from client: " << request << std::endl;
+
+            //call request_validator
+            std::vector<Command> commands = request_validator(request);
+
+            //call request_processor on vector of commands
+            std::vector<std::string> responses =  request_processor(commands,store);
+
+            //6- send data back to client
+            for (const std::string& response : responses){
+                send(client_fd, response.c_str(), response.size(), 0);
+            }
+            
+            //std::string response = " "; // to fill later
+            //send(client_fd, response.c_str(), response.size(), 0);
         }
-
-        std::string request(buffer, bytes_received);
-        std::cout << "Request from client: " << request << std::endl;
-
-        //call request_validator
-        std::vector<Command> commands = request_validator(request);
-
-        //call request_processor on vector of commands
-        std::vector<std::string> responses =  request_processor(commands,store);
-
-        //6- send data back to client
-        for (const std::string& response : responses){
-            send(client_fd, response.c_str(), response.size(), 0);
-        }
-        
-        //std::string response = " "; // to fill later
-        //send(client_fd, response.c_str(), response.size(), 0);
-
         //7- close this client s connection
         close(client_fd);
     }

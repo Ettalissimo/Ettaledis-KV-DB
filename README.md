@@ -54,11 +54,11 @@ if all good call the store methods
 tokenize → check keyword → check arity → dispatch
 
 The language Rules :
-
+`
 SET key value → keyword + 2 more tokens (key, value) → arity 2
 GET key       → keyword + 1 more token (key) → arity 1
 DEL key       → keyword + 1 more token (key) → arity 1
-
+`
 
 To run code using CMake:
 `mkdir build && cd build
@@ -77,3 +77,26 @@ Just add the new .cpp to the relevant list in CMakeLists.txt (e.g. a new src/exp
 
 `cmake ..
 make`
+
+
+First Phase:
+
+client can only send one request at each connection 
+
+Second Phase:
+
+single connect → single request/response cycle → close.
+
+
+Algo for having multi req/res with 1 client:
+`
+while (true) {                          // outer: accept new clients
+    accept a client
+    while (true) {                      // inner: handle many requests from THIS client
+        recv() from client
+        if bytes_received == 0: break;  // client disconnected
+        process command(s), send response(s)
+    }
+    close(client_fd)                    // only close once inner loop ends
+}
+`
