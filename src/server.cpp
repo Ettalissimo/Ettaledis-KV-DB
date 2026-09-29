@@ -67,10 +67,11 @@ int main(){
                   <<  inet_ntoa(client_addr.sin_addr) << ":"
                   <<  ntohs(client_addr.sin_port) << "\n";
         
+        // 5- read a request from client
+        char buffer[1024] = {0};
         while(true){
-            
-            // 5- read a request from client
-            char buffer[1024] = {0};
+
+
             ssize_t bytes_received = recv(client_fd, buffer, sizeof(buffer)-1, 0);
 
 
@@ -96,8 +97,6 @@ int main(){
                 send(client_fd, response.c_str(), response.size(), 0);
             }
             
-            //std::string response = " "; // to fill later
-            //send(client_fd, response.c_str(), response.size(), 0);
         }
         //7- close this client s connection
         close(client_fd);
